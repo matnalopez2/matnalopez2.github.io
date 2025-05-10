@@ -22,7 +22,7 @@ const translations = {
         'exp-5-title': 'Desarrollador Full Stack – Debmedia',
         'exp-6-title': 'Asistente Técnico – Investigaciones Médicas S.A.',
         'exp-7-title': 'Asesor independiente de SySO – SA&GE',
-        'exp-8-title': 'Técnico en Electrónico – Energía Confiable SRL',
+        'exp-8-title': 'Técnico Electrónico – Energía Confiable SRL',
         'education-title': 'Formación Académica',
         'education-text': 'Ingeniería Electrónica en curso – UTN FRBA. Carrera cursada en su totalidad, con finales pendientes para la obtención del título.',
         'teaching-title': 'Docencia',
@@ -78,45 +78,103 @@ const translations = {
     }
 };
 
+// Estado del idioma
+let currentLang = 'es';
+
+// Elementos del DOM
+const langToggle = document.getElementById('langToggle');
+const menuToggle = document.getElementById('menuToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+const scrollProgress = document.getElementById('scrollProgress');
+
 // Función para cambiar el idioma
-function setLanguage(lang) {
-    document.documentElement.lang = lang;
-    const elements = document.querySelectorAll('[data-lang]');
+function toggleLanguage() {
+    currentLang = currentLang === 'es' ? 'en' : 'es';
+    langToggle.textContent = currentLang === 'es' ? 'EN' : 'ES';
     
-    elements.forEach(element => {
+    document.querySelectorAll('[data-lang]').forEach(element => {
         const key = element.getAttribute('data-lang');
-        if (translations[lang][key]) {
-            element.textContent = translations[lang][key];
+        if (translations[currentLang][key]) {
+            element.textContent = translations[currentLang][key];
         }
     });
+}
 
-    // Actualizar el botón de idioma
-    const langToggle = document.getElementById('langToggle');
-    langToggle.textContent = lang === 'es' ? 'EN' : 'ES';
+// Función para manejar el menú móvil
+function toggleMobileMenu() {
+    mobileMenu.classList.toggle('hidden');
+    menuToggle.classList.toggle('text-highlight');
+}
+
+// Función para actualizar el indicador de progreso
+function updateScrollProgress() {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    scrollProgress.style.width = scrolled + '%';
+}
+
+// Función para manejar la animación al hacer scroll
+function handleScrollAnimation() {
+    const elements = document.querySelectorAll('.animate-on-scroll');
+    elements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const elementBottom = element.getBoundingClientRect().bottom;
+        
+        if (elementTop < window.innerHeight && elementBottom > 0) {
+            element.classList.add('animate-fade-in');
+        }
+    });
+}
+
+// Función para manejar el scroll suave
+function handleSmoothScroll(e) {
+    if (e.target.tagName === 'A' && e.target.getAttribute('href').startsWith('#')) {
+        e.preventDefault();
+        const targetId = e.target.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            // Cerrar el menú móvil si está abierto
+            if (!mobileMenu.classList.contains('hidden')) {
+                toggleMobileMenu();
+            }
+        }
+    }
+}
+
+// Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+    // Inicializar el idioma
+    toggleLanguage();
     
-    // Guardar preferencia en localStorage
-    localStorage.setItem('preferredLanguage', lang);
-}
-
-// Función para detectar el idioma del navegador
-function detectBrowserLanguage() {
-    const browserLang = navigator.language.split('-')[0];
-    return browserLang === 'es' ? 'es' : 'en';
-}
-
-// Inicializar el idioma
-function initializeLanguage() {
-    const savedLang = localStorage.getItem('preferredLanguage');
-    const initialLang = savedLang || detectBrowserLanguage();
-    setLanguage(initialLang);
-}
-
-// Event listener para el botón de cambio de idioma
-document.getElementById('langToggle').addEventListener('click', () => {
-    const currentLang = document.documentElement.lang;
-    const newLang = currentLang === 'es' ? 'en' : 'es';
-    setLanguage(newLang);
-});
-
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', initializeLanguage); 
+    // Agregar clase de animación a elementos
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('animate-on-scroll');
+    });
+    
+    // Event listeners
+    langToggle.addEventListener('click', toggleLanguage);
+    menuToggle.addEventListener('click', toggleMobileMenu);
+    window.addEventListener('scroll', () => {
+        updateScrollProgress();
+        handleScrollAnimation();
+    });
+    
+    // Manejar scroll suave
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', handleSmoothScroll);
+    });
+    
+    // Cerrar menú móvil al hacer click fuera
+    document.addEventListener('click', (e) => {
+        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target) && !mobileMenu.classList.contains('hidden')) {
+            toggleMobileMenu();
+        }
+    });
+}); 
