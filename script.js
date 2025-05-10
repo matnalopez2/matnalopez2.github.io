@@ -442,6 +442,9 @@ function setLanguage(lang) {
     if (typeof updateProfileSection === 'function') updateProfileSection();
     if (langSwitchToggle) langSwitchToggle.checked = currentLang === 'en';
     localStorage.setItem('lang', currentLang);
+    // Mostrar el contenido solo cuando ya está traducido
+    const mainBody = document.getElementById('mainBody');
+    if (mainBody) mainBody.classList.remove('invisible');
 }
 
 // Event Listeners
