@@ -137,7 +137,7 @@ const translations = {
 };
 
 // Estado del idioma
-let currentLang = 'es';
+let currentLang = localStorage.getItem('lang') || (navigator.language.startsWith('es') ? 'es' : 'en');
 
 // Elementos del DOM
 const langToggle = document.getElementById('langToggle');
@@ -366,16 +366,7 @@ const langSwitchToggle = document.getElementById('langSwitchToggle');
 if (langSwitchToggle) {
     langSwitchToggle.checked = currentLang === 'en';
     langSwitchToggle.addEventListener('change', () => {
-        currentLang = langSwitchToggle.checked ? 'en' : 'es';
-        document.querySelectorAll('[data-lang]').forEach(element => {
-            const key = element.getAttribute('data-lang');
-            if (translations[currentLang][key]) {
-                element.textContent = translations[currentLang][key];
-            }
-        });
-        updateCVDownload();
-        updateExperienceDetails();
-        updateProfileSection();
+        setLanguage(langSwitchToggle.checked ? 'en' : 'es');
     });
 }
 
@@ -438,11 +429,24 @@ function updateProfileSection() {
     }
 }
 
+function setLanguage(lang) {
+    currentLang = lang;
+    document.querySelectorAll('[data-lang]').forEach(element => {
+        const key = element.getAttribute('data-lang');
+        if (translations[currentLang][key] !== undefined) {
+            element.textContent = translations[currentLang][key];
+        }
+    });
+    updateCVDownload();
+    updateExperienceDetails();
+    if (typeof updateProfileSection === 'function') updateProfileSection();
+    if (langSwitchToggle) langSwitchToggle.checked = currentLang === 'en';
+    localStorage.setItem('lang', currentLang);
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicializar el idioma
-    toggleLanguage();
-    
+    setLanguage(currentLang);
     // Agregar clase de animación a elementos
     document.querySelectorAll('section').forEach(section => {
         section.classList.add('animate-on-scroll');
