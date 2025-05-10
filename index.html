@@ -19,6 +19,8 @@
                     animation: {
                         'fade-in': 'fadeIn 0.5s ease-in-out',
                         'slide-up': 'slideUp 0.5s ease-in-out',
+                        'slide-in': 'slideIn 0.5s ease-in-out',
+                        'scale-in': 'scaleIn 0.5s ease-in-out',
                     },
                     keyframes: {
                         fadeIn: {
@@ -28,6 +30,14 @@
                         slideUp: {
                             '0%': { transform: 'translateY(20px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        slideIn: {
+                            '0%': { transform: 'translateX(-20px)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
                         },
                     },
                 }
@@ -55,6 +65,105 @@
             z-index: 100;
             transition: width 0.1s ease;
         }
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            cursor: pointer;
+        }
+        .gallery-item img {
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(13, 42, 65, 0.8);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid #C89263;
+            margin-bottom: 2rem;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: #C89263;
+        }
+        .skill-card {
+            transition: all 0.3s ease;
+        }
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+        .switch-toggle {
+            position: relative;
+            display: inline-block;
+            width: 56px;
+            height: 32px;
+            vertical-align: middle;
+        }
+        .switch-toggle input { display: none; }
+        .switch-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #28657E; /* primary */
+            border-radius: 32px;
+            transition: background 0.3s;
+        }
+        .switch-slider:before {
+            position: absolute;
+            content: '';
+            height: 24px;
+            width: 24px;
+            left: 4px;
+            bottom: 4px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        input:checked + .switch-slider {
+            background: #C89263; /* highlight */
+        }
+        input:checked + .switch-slider:before {
+            transform: translateX(24px);
+        }
+        .switch-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #fff;
+            width: 56px;
+            position: absolute;
+            top: 36px;
+            left: 0;
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -80,13 +189,18 @@
                     <li><a href="#inicio" data-lang="nav-home" class="text-white hover:text-highlight transition-colors duration-200">Inicio</a></li>
                     <li><a href="#perfil" data-lang="nav-profile" class="text-white hover:text-highlight transition-colors duration-200">Perfil</a></li>
                     <li><a href="#experiencia" data-lang="nav-experience" class="text-white hover:text-highlight transition-colors duration-200">Experiencia</a></li>
-                    <li><a href="#formacion" data-lang="nav-education" class="text-white hover:text-highlight transition-colors duration-200">Formación</a></li>
-                    <li><a href="#docencia" data-lang="nav-teaching" class="text-white hover:text-highlight transition-colors duration-200">Docencia</a></li>
-                    <li><a href="#aptitudes" data-lang="nav-skills" class="text-white hover:text-highlight transition-colors duration-200">Aptitudes</a></li>
                     <li><a href="#contacto" data-lang="nav-contact" class="text-white hover:text-highlight transition-colors duration-200">Contacto</a></li>
                 </ul>
 
-                <button id="langToggle" class="bg-highlight text-white px-4 py-2 rounded-full hover:bg-primary transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">EN</button>
+                <!-- Switch de idioma ON/OFF visual alineado horizontalmente -->
+                <div class="ml-4 flex items-center justify-center gap-2 relative" style="min-width:140px;">
+                    <span id="switch-es" class="font-semibold text-white">ES</span>
+                    <label class="switch-toggle mx-2">
+                        <input type="checkbox" id="langSwitchToggle">
+                        <span class="switch-slider"></span>
+                    </label>
+                    <span id="switch-en" class="font-semibold text-white">EN</span>
+                </div>
             </div>
 
             <!-- Menú mobile -->
@@ -95,9 +209,6 @@
                     <li><a href="#inicio" data-lang="nav-home" class="block text-white hover:text-highlight transition-colors duration-200">Inicio</a></li>
                     <li><a href="#perfil" data-lang="nav-profile" class="block text-white hover:text-highlight transition-colors duration-200">Perfil</a></li>
                     <li><a href="#experiencia" data-lang="nav-experience" class="block text-white hover:text-highlight transition-colors duration-200">Experiencia</a></li>
-                    <li><a href="#formacion" data-lang="nav-education" class="block text-white hover:text-highlight transition-colors duration-200">Formación</a></li>
-                    <li><a href="#docencia" data-lang="nav-teaching" class="block text-white hover:text-highlight transition-colors duration-200">Docencia</a></li>
-                    <li><a href="#aptitudes" data-lang="nav-skills" class="block text-white hover:text-highlight transition-colors duration-200">Aptitudes</a></li>
                     <li><a href="#contacto" data-lang="nav-contact" class="block text-white hover:text-highlight transition-colors duration-200">Contacto</a></li>
                 </ul>
             </div>
@@ -106,23 +217,30 @@
 
     <main class="pt-20">
         <section id="inicio" class="gradient-bg text-white py-32 -mt-20">
-            <div class="container mx-auto px-4 text-center">
-                <div class="max-w-4xl mx-auto">
-                    <h1 data-lang="name" class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">Matías Nahuel López</h1>
-                    <h2 data-lang="role" class="text-2xl md:text-3xl text-accent-light mb-4 animate-slide-up">Director de Tecnología de la Información</h2>
-                    <p class="text-accent-soft text-xl mb-8 animate-slide-up" data-lang="location">Argentina</p>
-                    <p class="max-w-3xl mx-auto text-gray-200 leading-relaxed text-lg animate-slide-up" data-lang="hero-description">
-                        Director de Tecnología con más de 10 años de experiencia en tecnología e ingeniería. 
-                        Lideró proyectos de transformación digital, infraestructura crítica, ciberseguridad y mejora operativa en LATAM. 
-                        Actualmente dirige la estrategia de TI en Grupo Tesacom y forma futuros ingenieros como docente en UTN FRBA.
-                    </p>
-                    <div class="mt-12 flex justify-center space-x-4">
-                        <a href="#contacto" class="bg-highlight text-white px-8 py-3 rounded-full hover:bg-primary transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                            <span data-lang="contact-button">Contactar</span>
-                        </a>
-                        <a href="#experiencia" class="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-primary-dark transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                            <span data-lang="experience-button">Ver Experiencia</span>
-                        </a>
+            <div class="container mx-auto px-4">
+                <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 data-lang="name" class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">Matías Nahuel López</h1>
+                        <h2 data-lang="role" class="text-2xl md:text-3xl text-accent-light mb-4 animate-slide-up">Director de Tecnología de la Información</h2>
+                        <p class="text-accent-soft text-xl mb-8 animate-slide-up" data-lang="location">Argentina</p>
+                        <p class="max-w-3xl text-gray-200 leading-relaxed text-lg animate-slide-up" data-lang="hero-description">
+                            Director de Tecnología con más de 10 años de experiencia en tecnología e ingeniería. 
+                            Lideró proyectos de transformación digital, infraestructura crítica, ciberseguridad y mejora operativa en LATAM. 
+                            Actualmente dirige la estrategia de TI en Grupo Tesacom y forma futuros ingenieros como docente en UTN FRBA.
+                        </p>
+                        <div class="mt-12 flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4">
+                            <a href="#contacto" class="bg-highlight text-white px-8 py-3 rounded-full hover:bg-primary transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <span data-lang="contact-button">Contactar</span>
+                            </a>
+                            <a href="#experiencia" class="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-primary-dark transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <span data-lang="experience-button">Ver Experiencia</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="flex-1 relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden border-4 border-highlight shadow-2xl animate-scale-in">
+                            <img src="profile.png" alt="Matías Nahuel López" class="w-full h-full object-cover">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,87 +261,133 @@
             </div>
         </section>
 
-        <section id="experiencia" class="py-20 bg-gray-50">
+        <section id="galeria" class="py-20 bg-gray-50">
+            <div class="container mx-auto px-4">
+                <h2 data-lang="gallery-title" class="text-4xl font-bold text-primary-dark mb-12 text-center">Galería</h2>
+                <div id="gallery-carousel" class="relative max-w-3xl mx-auto flex items-center">
+                    <button id="gallery-prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow hover:bg-highlight hover:text-white transition-colors z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
+                    <div id="gallery-images" class="overflow-hidden rounded-2xl shadow-lg flex w-full gap-4"></div>
+                    <button id="gallery-next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow hover:bg-highlight hover:text-white transition-colors z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="experiencia" class="py-20 bg-white">
             <div class="container mx-auto px-4">
                 <h2 data-lang="experience-title" class="text-4xl font-bold text-primary-dark mb-12 text-center">Experiencia Laboral</h2>
-                <div class="max-w-4xl mx-auto space-y-8">
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">GT</div>
-                            <div>
-                                <h3 data-lang="exp-1-title" class="text-xl font-semibold text-primary-dark">Director de TI – Grupo Tesacom</h3>
-                                <p class="text-primary font-medium mb-4">abr 2024 – Presente</p>
-                                <p class="text-gray-600">Liderando la estrategia de transformación digital y gestión de TI a nivel regional.</p>
+                <div class="max-w-4xl mx-auto space-y-10">
+                    <!-- Grupo Tesacom -->
+                    <div class="bg-gray-50 rounded-2xl shadow-lg p-6 flex items-center mb-4">
+                        <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden mr-4">
+                            <img src="logos/tesacom.png" alt="Tesacom" onerror="this.style.display='none';this.parentNode.innerHTML='<span class=\'text-highlight font-bold text-lg\'>GT</span>';" class="object-contain w-full h-full" />
+                        </div>
+                        <div class="flex-1 flex items-center">
+                            <span class="text-2xl font-semibold text-primary-dark">Tesacom</span>
+                            <a href="https://tesacom.net" target="_blank" rel="noopener noreferrer" class="ml-2 group relative">
+                                <svg class="w-5 h-5 text-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m7-1V7a2 2 0 0 1-2 2h-1m3-3l-9 9"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                        <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-1-detail">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-highlight" data-lang="exp-1-title">Director de TI</span>
+                                <span class="text-sm text-gray-500">abr 2024 – Presente</span>
+                            </div>
+                            <div class="exp-detail hidden mt-2 text-gray-700" id="exp-1-detail" data-lang="exp-1-detail"></div>
+                        </div>
+                        <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-2-detail">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-primary-dark" data-lang="exp-2-title">Gerente Regional de TI</span>
+                                <span class="text-sm text-gray-500">abr 2022 – abr 2024</span>
+                            </div>
+                            <div class="exp-detail hidden mt-2 text-gray-700" id="exp-2-detail" data-lang="exp-2-detail"></div>
+                        </div>
+                        <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-3-detail">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-primary-dark" data-lang="exp-3-title">Líder de Aplicaciones</span>
+                                <span class="text-sm text-gray-500">jul 2021 – abr 2022</span>
+                            </div>
+                            <div class="exp-detail hidden mt-2 text-gray-700" id="exp-3-detail" data-lang="exp-3-detail"></div>
+                        </div>
+                        <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-4-detail">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-primary-dark" data-lang="exp-4-title">Ingeniero de Redes</span>
+                                <span class="text-sm text-gray-500">oct 2019 – jul 2021</span>
+                            </div>
+                            <div class="exp-detail hidden mt-2 text-gray-700" id="exp-4-detail" data-lang="exp-4-detail"></div>
+                        </div>
+                    </div>
+                    <!-- Debmedia -->
+                    <div class="bg-gray-50 rounded-2xl shadow-lg p-6">
+                        
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden mr-4">
+                                <img src="logos/numia.png" alt="Numia" onerror="this.style.display='none';this.parentNode.innerHTML='<span class=\'text-highlight font-bold text-lg\'>N</span>';" class="object-contain w-full h-full" />
+                            </div>
+                            <span class="ml-4 text-2xl font-semibold text-primary-dark">Numia (ex Debmedia)</span>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-5-detail">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-primary-dark" data-lang="exp-5-title">Desarrollador Full Stack</span>
+                                    <span class="text-sm text-gray-500">may 2018 – oct 2019</span>
+                                </div>
+                                <div class="exp-detail hidden mt-2 text-gray-700" id="exp-5-detail" data-lang="exp-5-detail"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">GT</div>
-                            <div>
-                                <h3 data-lang="exp-2-title" class="text-xl font-semibold text-primary-dark">Gerente Regional de TI – Tesacom</h3>
-                                <p class="text-primary font-medium mb-4">abr 2022 – abr 2024</p>
-                                <p class="text-gray-600">Gestión de la estrategia de TI a nivel regional.</p>
+                    <!-- Investigaciones Médicas S.A. -->
+                    <div class="bg-gray-50 rounded-2xl shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden mr-4">
+                                <img src="logos/investigacionesmedicas.png" alt="Investigaciones Médicas S.A." onerror="this.style.display='none';this.parentNode.innerHTML='<span class=\'text-highlight font-bold text-lg\'>IM</span>';" class="object-contain w-full h-full" />
+                            </div>
+                            <span class="ml-4 text-2xl font-semibold text-primary-dark">Investigaciones Médicas S.A.</span>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-6-detail">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-primary-dark" data-lang="exp-6-title">Asistente Técnico</span>
+                                    <span class="text-sm text-gray-500">ago 2016 – may 2018</span>
+                                </div>
+                                <div class="exp-detail hidden mt-2 text-gray-700" id="exp-6-detail" data-lang="exp-6-detail"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">GT</div>
-                            <div>
-                                <h3 data-lang="exp-3-title" class="text-xl font-semibold text-primary-dark">Líder de Aplicaciones – Tesacom</h3>
-                                <p class="text-primary font-medium mb-4">jul 2021 – abr 2022</p>
-                                <p class="text-gray-600">Lideración de equipos de desarrollo y gestión de proyectos.</p>
+                    <!-- SA&GE -->
+                    <div class="bg-gray-50 rounded-2xl shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">S</div>
+                            <span class="ml-4 text-2xl font-semibold text-primary-dark">SA&GE</span>
+                        </div>
+                        <div class="divide-y divide-gray-200">
+                            <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-7-detail">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-primary-dark" data-lang="exp-7-title">Asesor independiente de SySO</span>
+                                    <span class="text-sm text-gray-500">may 2015 – jul 2016</span>
+                                </div>
+                                <div class="exp-detail hidden mt-2 text-gray-700" id="exp-7-detail" data-lang="exp-7-detail"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">GT</div>
-                            <div>
-                                <h3 data-lang="exp-4-title" class="text-xl font-semibold text-primary-dark">Ingeniero de Redes – Tesacom</h3>
-                                <p class="text-primary font-medium mb-4">oct 2019 – jul 2021</p>
-                                <p class="text-gray-600">Diseño y gestión de infraestructuras de red.</p>
+                    <!-- Energía Confiable SRL -->
+                    <div class="bg-gray-50 rounded-2xl shadow-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden mr-4">
+                                <img src="logos/energiaconfiable.png" alt="Energía Confiable" onerror="this.style.display='none';this.parentNode.innerHTML='<span class=\'text-highlight font-bold text-lg\'>EC</span>';" class="object-contain w-full h-full" />
                             </div>
+                            <span class="ml-4 text-2xl font-semibold text-primary-dark">Energía Confiable SRL</span>
                         </div>
-                    </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">DM</div>
-                            <div>
-                                <h3 data-lang="exp-5-title" class="text-xl font-semibold text-primary-dark">Desarrollador Full Stack – Debmedia</h3>
-                                <p class="text-primary font-medium mb-4">may 2018 – oct 2019</p>
-                                <p class="text-gray-600">Desarrollo de aplicaciones web y móviles.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">IM</div>
-                            <div>
-                                <h3 data-lang="exp-6-title" class="text-xl font-semibold text-primary-dark">Asistente Técnico – Investigaciones Médicas S.A.</h3>
-                                <p class="text-primary font-medium mb-4">ago 2016 – may 2018</p>
-                                <p class="text-gray-600">Apoyo técnico en proyectos médicos.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">SA&GE</div>
-                            <div>
-                                <h3 data-lang="exp-7-title" class="text-xl font-semibold text-primary-dark">Asesor independiente de SySO – SA&GE</h3>
-                                <p class="text-primary font-medium mb-4">may 2015 – jul 2016</p>
-                                <p class="text-gray-600">Asesoría en sistemas operativos y seguridad.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-highlight rounded-full flex items-center justify-center text-white font-bold">ECS</div>
-                            <div>
-                                <h3 data-lang="exp-8-title" class="text-xl font-semibold text-primary-dark">Técnico Electrónico – Energía Confiable SRL</h3>
-                                <p class="text-primary font-medium mb-4">sep 2013 – abr 2015</p>
-                                <p class="text-gray-600">Mantenimiento y reparación de sistemas electrónicos.</p>
+                        <div class="divide-y divide-gray-200">
+                            <div class="exp-card cursor-pointer py-4 transition-all duration-300 hover:bg-gray-100" data-detail="exp-8-detail">
+                                <div class="flex justify-between items-center">
+                                    <span class="font-semibold text-primary-dark" data-lang="exp-8-title">Técnico Electrónico</span>
+                                    <span class="text-sm text-gray-500">sep 2013 – abr 2015</span>
+                                </div>
+                                <div class="exp-detail hidden mt-2 text-gray-700" id="exp-8-detail" data-lang="exp-8-detail"></div>
                             </div>
                         </div>
                     </div>
@@ -231,58 +395,88 @@
             </div>
         </section>
 
-        <section id="formacion" class="py-20 bg-white">
+        <section id="formacion" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto">
-                    <h2 data-lang="education-title" class="text-4xl font-bold text-primary-dark mb-8 text-center">Formación Académica</h2>
-                    <div class="bg-gray-50 rounded-2xl p-8 shadow-lg">
-                        <p data-lang="education-text" class="text-gray-700 leading-relaxed text-lg">
-                            Ingeniería Electrónica en curso – UTN FRBA. Carrera cursada en su totalidad, 
-                            con finales pendientes para la obtención del título.
-                        </p>
+                <h2 data-lang="education-title" class="text-4xl font-bold text-primary-dark mb-12 text-center">Formación Académica</h2>
+                <div class="max-w-4xl mx-auto space-y-10">
+                    <div class="bg-white rounded-2xl shadow-lg p-6 flex items-center mb-4">
+                        <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden mr-4">
+                            <img src="logos/utnfrba.png" alt="UTN FRBA" onerror="this.style.display='none';this.parentNode.innerHTML='<span class=\'text-highlight font-bold text-lg\'>UTN</span>';" class="object-contain w-full h-full" />
+                        </div>
+                        <div class="flex-1 flex items-center">
+                            <span class="text-2xl font-semibold text-primary-dark">UTN FRBA</span>
+                            <a href="https://frba.utn.edu.ar/" target="_blank" rel="noopener noreferrer" class="ml-2 group relative">
+                                <svg class="w-5 h-5 text-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m7-1V7a2 2 0 0 1-2 2h-1m3-3l-9 9"></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="divide-y divide-gray-200">
+                        <div class="py-4 flex flex-col md:flex-row md:items-center md:justify-between">
+                            <div class="flex items-center">
+                                <a href="https://www.frba.utn.edu.ar/electronica/" target="_blank" rel="noopener noreferrer" class="font-semibold text-primary hover:text-highlight transition-colors duration-200 text-lg flex items-center">
+                                    <span data-lang="education-career">Ingeniería Electrónica</span>
+                                    <svg class="w-4 h-4 ml-1 text-primary-dark opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m7-1V7a2 2 0 0 1-2 2h-1m3-3l-9 9"></path></svg>
+                                </a>
+                            </div>
+                            <span class="text-sm text-gray-500 mt-2 md:mt-0 md:ml-4">2012 – Presente</span>
+                        </div>
+                        <div class="py-2 text-gray-700" data-lang="education-detail">
+                            Ingeniería Electrónica en curso – UTN FRBA. Carrera cursada en su totalidad, con finales pendientes para la obtención del título.
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="docencia" class="py-20 bg-gray-50">
+        <section id="docencia" class="py-20 bg-white">
             <div class="container mx-auto px-4">
                 <h2 data-lang="teaching-title" class="text-4xl font-bold text-primary-dark mb-12 text-center">Docencia</h2>
-                <div class="max-w-4xl mx-auto space-y-8">
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <h3 data-lang="teaching-1-title" class="text-xl font-semibold text-primary-dark mb-4">Auxiliar docente – UTN FRBA</h3>
-                        <p class="text-primary font-medium mb-4">mar 2025 – Presente</p>
-                        <p data-lang="teaching-1-desc" class="text-gray-700">
-                            Informática 1: Participación en el curso piloto de Programación en C con introducción a microcontroladores. 
-                            Enfoque en lógica de programación, estructura de código y primeros conceptos de hardware embebido.
-                        </p>
+                <div class="max-w-4xl mx-auto space-y-10">
+                    <div class="bg-gray-50 rounded-2xl shadow-lg p-6 flex items-center mb-4">
+                        <div class="w-12 h-12 flex-shrink-0 flex items-center justify-center rounded-full bg-gray-200 overflow-hidden mr-4">
+                            <img src="logos/utnfrba.png" alt="UTN FRBA" onerror="this.style.display='none';this.parentNode.innerHTML='<span class=\'text-highlight font-bold text-lg\'>UTN</span>';" class="object-contain w-full h-full" />
+                        </div>
+                        <div class="flex-1 flex items-center">
+                            <span class="text-2xl font-semibold text-primary-dark">UTN FRBA</span>
+                            <a href="https://frba.utn.edu.ar/" target="_blank" rel="noopener noreferrer" class="ml-2 group relative">
+                                <svg class="w-5 h-5 text-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 13v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6m7-1V7a2 2 0 0 1-2 2h-1m3-3l-9 9"></path>
+                                </svg>
+                            </a>
+                        </div>
                     </div>
-                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-200">
-                        <h3 data-lang="teaching-2-title" class="text-xl font-semibold text-primary-dark mb-4">Auxiliar docente – UTN FRBA</h3>
-                        <p class="text-primary font-medium mb-4">mar 2024 – Presente y mar 2017 – dic 2017</p>
-                        <p data-lang="teaching-2-desc" class="text-gray-700">
-                            Informática 2: Lenguaje C/C++, programación con Qt, trabajo con microcontroladores (UART, SPI, I2C), 
-                            desarrollo de proyectos integradores en software y hardware.
-                        </p>
+                    <div class="divide-y divide-gray-200">
+                        <div class="py-4">
+                            <span class="font-semibold text-primary-dark" data-lang="teaching-1-title">Informática 1 - Auxiliar docente</span>
+                            <span class="text-sm text-gray-500 ml-2">mar 2025 – Presente</span>
+                            <div class="mt-2 text-gray-700" data-lang="teaching-1-detail">Informática 1: Participación en el curso piloto de Programación en C con introducción a microcontroladores. Enfoque en lógica de programación, estructura de código y primeros conceptos de hardware embebido.</div>
+                        </div>
+                        <div class="py-4">
+                            <span class="font-semibold text-primary-dark" data-lang="teaching-2-title">Informática 2 - Auxiliar docente</span>
+                            <span class="text-sm text-gray-500 ml-2">mar 2024 – Presente y mar 2017 – dic 2017</span>
+                            <div class="mt-2 text-gray-700" data-lang="teaching-2-detail">Informática 2: Lenguaje C/C++, programación con Qt, trabajo con microcontroladores (UART, SPI, I2C), desarrollo de proyectos integradores en software y hardware.</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="aptitudes" class="py-20 bg-white">
+        <section id="aptitudes" class="py-20 bg-gray-50">
             <div class="container mx-auto px-4">
                 <h2 data-lang="skills-title" class="text-4xl font-bold text-primary-dark mb-12 text-center">Aptitudes</h2>
                 <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-shadow duration-200">
+                    <div class="skill-card bg-white p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-all duration-200">
                         <p data-lang="skill-1" class="text-gray-700 text-lg">Resolución de problemas complejos</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-shadow duration-200">
+                    <div class="skill-card bg-white p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-all duration-200">
                         <p data-lang="skill-2" class="text-gray-700 text-lg">Gestión de cambio estructural</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-shadow duration-200">
+                    <div class="skill-card bg-white p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-all duration-200">
                         <p data-lang="skill-3" class="text-gray-700 text-lg">Transformación digital aplicada al negocio</p>
                     </div>
-                    <div class="bg-gray-50 p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-shadow duration-200">
+                    <div class="skill-card bg-white p-6 rounded-xl border-l-4 border-highlight hover:shadow-lg transition-all duration-200">
                         <p data-lang="skill-4" class="text-gray-700 text-lg">Idiomas: Español (nativo), Inglés (profesional completo)</p>
                     </div>
                 </div>
@@ -292,14 +486,26 @@
         <section id="contacto" class="py-20 gradient-bg text-white">
             <div class="container mx-auto px-4 text-center">
                 <h2 data-lang="contact-title" class="text-4xl font-bold mb-12">Contacto</h2>
-                <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-center gap-6">
-                    <a href="mailto:matias@matnalopez.com.ar" class="inline-block px-8 py-4 border-2 border-highlight text-highlight hover:bg-highlight hover:text-white transition-colors duration-200 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-center gap-6 mb-8">
+                    <a href="mailto:matias@matnalopez.com.ar" class="inline-flex items-center px-8 py-4 border-2 border-highlight text-highlight hover:bg-highlight hover:text-white transition-colors duration-200 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
                         <span data-lang="email-button">Email</span>
                     </a>
-                    <a href="https://linkedin.com/in/matnalopez" target="_blank" rel="noopener noreferrer" class="inline-block px-8 py-4 border-2 border-highlight text-highlight hover:bg-highlight hover:text-white transition-colors duration-200 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    <a href="https://linkedin.com/in/matnalopez" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-8 py-4 border-2 border-highlight text-highlight hover:bg-highlight hover:text-white transition-colors duration-200 rounded-full shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
                         <span data-lang="linkedin-button">LinkedIn</span>
                     </a>
                 </div>
+                <a id="cvDownload" href="cv-matias-nahuel-lopez-es.pdf" download class="flex items-center bg-highlight text-white px-6 py-3 rounded-full shadow-lg hover:bg-primary transition-colors duration-200 mx-auto w-max">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                    </svg>
+                    <span data-lang="cv-download">Descargar CV</span>
+                </a>
             </div>
         </section>
     </main>
@@ -311,5 +517,13 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- Modal para galería HD -->
+    <div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+        <button id="gallery-modal-close" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
+        <button id="gallery-modal-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl">&#8592;</button>
+        <img id="gallery-modal-img" src="" alt="" class="max-h-[80vh] max-w-[90vw] rounded-2xl shadow-2xl cursor-zoom-in" />
+        <button id="gallery-modal-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl">&#8594;</button>
+    </div>
 </body>
 </html> 
