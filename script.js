@@ -3,7 +3,6 @@ const translations = {
     es: {
         'nav-home': 'Inicio',
         'nav-profile': 'Perfil',
-        'nav-gallery': 'Galería',
         'nav-experience': 'Experiencia',
         'nav-education': 'Formación',
         'nav-teaching': 'Docencia',
@@ -21,13 +20,6 @@ const translations = {
         'profile-text-5': 'Optimización de infraestructura TI: racionalización de hosting y virtualización, con una reducción aproximada del 25% en costos anuales.',
         'profile-text-6': 'Resiliencia en ciberseguridad: contuvimos un ataque de ransomware LockBit Black sin pérdida de datos e implementamos backups inmutables, 2FA y modelo Zero Trust, alineados con las recomendaciones FBI/CISA.',
         'profile-text-7': 'Cultura y liderazgo: desarrollo de un equipo TI multidisciplinario de alto desempeño con impacto regional; gestión por OKRs, mentoría continua y retención de talento en un entorno de crecimiento.',
-        'gallery-title': 'Galería',
-        'gallery-1-title': 'Presentación en Conferencia',
-        'gallery-1-desc': 'Compartiendo conocimientos sobre transformación digital',
-        'gallery-2-title': 'Trabajo en Equipo',
-        'gallery-2-desc': 'Liderando proyectos de innovación',
-        'gallery-3-title': 'Docencia',
-        'gallery-3-desc': 'Formando futuros profesionales',
         'experience-title': 'Experiencia Laboral',
         'exp-1-title': 'Director de TI',
         'exp-2-title': 'Gerente Regional de TI',
@@ -70,7 +62,6 @@ const translations = {
     en: {
         'nav-home': 'Home',
         'nav-profile': 'Profile',
-        'nav-gallery': 'Gallery',
         'nav-experience': 'Experience',
         'nav-education': 'Education',
         'nav-teaching': 'Teaching',
@@ -88,13 +79,6 @@ const translations = {
         'profile-text-5': 'IT infrastructure optimization: streamlined hosting and virtualization, achieving an approximate 25% annual cost reduction.',
         'profile-text-6': 'Cyber-resilience: contained a LockBit Black ransomware attack with zero data loss and deployed immutable backups, 2-factor authentication and a Zero Trust model in line with FBI/CISA guidance.',
         'profile-text-7': 'Culture & leadership: built a high-performing, multidisciplinary IT team with regional impact; OKR-driven management, continuous mentoring and strong talent retention in a growth environment.',
-        'gallery-title': 'Gallery',
-        'gallery-1-title': 'Conference Presentation',
-        'gallery-1-desc': 'Sharing knowledge about digital transformation',
-        'gallery-2-title': 'Team Work',
-        'gallery-2-desc': 'Leading innovation projects',
-        'gallery-3-title': 'Teaching',
-        'gallery-3-desc': 'Training future professionals',
         'experience-title': 'Work Experience',
         'exp-1-title': 'IT Director',
         'exp-2-title': 'Regional IT Manager',
@@ -208,45 +192,6 @@ function handleSmoothScroll(e) {
     }
 }
 
-// Función para manejar la galería
-function handleGallery() {
-    const galleryItems = document.querySelectorAll('.gallery-item');
-    
-    galleryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const img = item.querySelector('img');
-            const caption = item.querySelector('.gallery-caption');
-            
-            // Crear modal
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50';
-            
-            const modalContent = document.createElement('div');
-            modalContent.className = 'max-w-4xl mx-auto p-4';
-            
-            const modalImg = document.createElement('img');
-            modalImg.src = img.src;
-            modalImg.alt = img.alt;
-            modalImg.className = 'w-full h-auto rounded-lg';
-            
-            const modalCaption = document.createElement('div');
-            modalCaption.className = 'text-white mt-4 text-center';
-            modalCaption.innerHTML = caption.innerHTML;
-            
-            modalContent.appendChild(modalImg);
-            modalContent.appendChild(modalCaption);
-            modal.appendChild(modalContent);
-            
-            // Cerrar modal al hacer click
-            modal.addEventListener('click', () => {
-                modal.remove();
-            });
-            
-            document.body.appendChild(modal);
-        });
-    });
-}
-
 // Cambiar el enlace del CV según el idioma
 function updateCVDownload() {
     const cvDownload = document.getElementById('cvDownload');
@@ -260,59 +205,6 @@ function updateCVDownload() {
     }
 }
 
-// --- Carrousel dinámico para la galería usando gallery.json ---
-const galleryDir = 'gallery/';
-const galleryImagesDiv = document.getElementById('gallery-images');
-const galleryPrev = document.getElementById('gallery-prev');
-const galleryNext = document.getElementById('gallery-next');
-let galleryImages = [];
-let galleryIndex = 0;
-
-function showGalleryImages(idx) {
-    if (!galleryImagesDiv) return;
-    galleryImagesDiv.innerHTML = '';
-    if (galleryImages.length === 0) return;
-    let visible = 1;
-    if (window.innerWidth >= 768) visible = 3;
-    for (let i = 0; i < visible; i++) {
-        const imgIdx = (idx + i) % galleryImages.length;
-        const img = document.createElement('img');
-        img.src = galleryDir + galleryImages[imgIdx];
-        img.alt = 'Foto galería ' + (imgIdx + 1);
-        img.className = 'w-full h-96 object-cover rounded-2xl transition-all duration-500 flex-1 cursor-pointer';
-        img.loading = 'lazy';
-        img.onclick = () => openGalleryModal(imgIdx);
-        galleryImagesDiv.appendChild(img);
-    }
-}
-
-function setupGalleryCarousel() {
-    if (galleryPrev && galleryNext) {
-        galleryPrev.addEventListener('click', () => {
-            galleryIndex = (galleryIndex - 1 + galleryImages.length) % galleryImages.length;
-            showGalleryImages(galleryIndex);
-        });
-        galleryNext.addEventListener('click', () => {
-            galleryIndex = (galleryIndex + 1) % galleryImages.length;
-            showGalleryImages(galleryIndex);
-        });
-    }
-    if (galleryImages.length > 0) {
-        showGalleryImages(galleryIndex);
-    }
-    window.addEventListener('resize', () => showGalleryImages(galleryIndex));
-}
-
-// Leer gallery.json
-fetch(galleryDir + 'gallery.json')
-    .then(res => res.json())
-    .then(imgs => {
-        galleryImages = imgs;
-        setupGalleryCarousel();
-    })
-    .catch(() => {
-        // Si falla, no mostrar nada
-    });
 
 // --- Animaciones y lógica para cards de experiencia laboral ---
 document.querySelectorAll('.exp-card').forEach(card => {
@@ -370,49 +262,6 @@ if (langSwitchToggle) {
     });
 }
 
-// --- Modal para galería HD con zoom y navegación ---
-const galleryModal = document.getElementById('gallery-modal');
-const galleryModalImg = document.getElementById('gallery-modal-img');
-const galleryModalClose = document.getElementById('gallery-modal-close');
-const galleryModalPrev = document.getElementById('gallery-modal-prev');
-const galleryModalNext = document.getElementById('gallery-modal-next');
-let galleryModalIndex = 0;
-
-function openGalleryModal(idx) {
-    if (!galleryModal || !galleryModalImg) return;
-    galleryModal.classList.remove('hidden');
-    galleryModalIndex = idx;
-    galleryModalImg.src = galleryDir + galleryImages[galleryModalIndex];
-    galleryModalImg.alt = 'Foto galería HD ' + (galleryModalIndex + 1);
-}
-function closeGalleryModal() {
-    if (!galleryModal) return;
-    galleryModal.classList.add('hidden');
-    galleryModalImg.src = '';
-}
-function nextGalleryModal() {
-    galleryModalIndex = (galleryModalIndex + 1) % galleryImages.length;
-    openGalleryModal(galleryModalIndex);
-}
-function prevGalleryModal() {
-    galleryModalIndex = (galleryModalIndex - 1 + galleryImages.length) % galleryImages.length;
-    openGalleryModal(galleryModalIndex);
-}
-if (galleryModalClose) galleryModalClose.onclick = closeGalleryModal;
-if (galleryModalNext) galleryModalNext.onclick = nextGalleryModal;
-if (galleryModalPrev) galleryModalPrev.onclick = prevGalleryModal;
-if (galleryModal) galleryModal.onclick = (e) => { if (e.target === galleryModal) closeGalleryModal(); };
-if (galleryModalImg) {
-    let zoomed = false;
-    galleryModalImg.onclick = () => {
-        zoomed = !zoomed;
-        if (zoomed) {
-            galleryModalImg.classList.add('scale-150', 'cursor-zoom-out');
-        } else {
-            galleryModalImg.classList.remove('scale-150', 'cursor-zoom-out');
-        }
-    };
-}
 
 // Mostrar/ocultar bloques de perfil según idioma
 function updateProfileSection() {
@@ -467,9 +316,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', handleSmoothScroll);
     });
-    
-    // Inicializar galería
-    handleGallery();
     
     // Cerrar menú móvil al hacer click fuera
     document.addEventListener('click', (e) => {

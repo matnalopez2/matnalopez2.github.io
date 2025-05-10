@@ -65,37 +65,6 @@
             z-index: 100;
             transition: width 0.1s ease;
         }
-        .image-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-            cursor: pointer;
-        }
-        .gallery-item img {
-            transition: transform 0.3s ease;
-        }
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-        .gallery-caption {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(13, 42, 65, 0.8);
-            color: white;
-            padding: 1rem;
-            transform: translateY(100%);
-            transition: transform 0.3s ease;
-        }
-        .gallery-item:hover .gallery-caption {
-            transform: translateY(0);
-        }
         .timeline-item {
             position: relative;
             padding-left: 2rem;
@@ -476,17 +445,6 @@
             </div>
         </section>
 
-        <section id="galeria" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-4">
-                <h2 data-lang="gallery-title" class="text-4xl font-bold text-primary-dark mb-12 text-center">Galería</h2>
-                <div id="gallery-carousel" class="relative max-w-3xl mx-auto flex items-center">
-                    <button id="gallery-prev" class="absolute left-0 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow hover:bg-highlight hover:text-white transition-colors z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg></button>
-                    <div id="gallery-images" class="overflow-hidden rounded-2xl shadow-lg flex w-full gap-4"></div>
-                    <button id="gallery-next" class="absolute right-0 top-1/2 -translate-y-1/2 bg-white bg-opacity-80 rounded-full p-2 shadow hover:bg-highlight hover:text-white transition-colors z-10"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg></button>
-                </div>
-            </div>
-        </section>
-
         <section id="contacto" class="py-20 gradient-bg text-white">
             <div class="container mx-auto px-4 text-center">
                 <h2 data-lang="contact-title" class="text-4xl font-bold mb-12">Contacto</h2>
@@ -521,13 +479,5 @@
     </footer>
 
     <script src="script.js"></script>
-
-    <!-- Modal para galería HD -->
-    <div id="gallery-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
-        <button id="gallery-modal-close" class="absolute top-4 right-4 text-white text-3xl">&times;</button>
-        <button id="gallery-modal-prev" class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-3xl">&#8592;</button>
-        <img id="gallery-modal-img" src="" alt="" class="max-h-[80vh] max-w-[90vw] rounded-2xl shadow-2xl cursor-zoom-in" />
-        <button id="gallery-modal-next" class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-3xl">&#8594;</button>
-    </div>
 </body>
 </html> 
