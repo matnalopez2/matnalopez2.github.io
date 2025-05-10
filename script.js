@@ -12,9 +12,15 @@ const translations = {
         'name': 'Matías Nahuel López',
         'role': 'Director de Tecnología de la Información',
         'location': 'Argentina',
-        'hero-description': 'Director de Tecnología con más de 10 años de experiencia en tecnología e ingeniería. Lideró proyectos de transformación digital, infraestructura crítica, ciberseguridad y mejora operativa en LATAM. Actualmente dirige la estrategia de TI en Grupo Tesacom y forma futuros ingenieros como docente en UTN FRBA.',
+        'hero-description': 'Liderazgo tecnológico con human touch para transformar negocios. \nProfesional en tecnología e ingeniería con más de 10 años de trayectoria; hoy diseño y ejecuto la estrategia TI de un grupo regional de telecomunicaciones satelitales y formo futuros ingenieros como docente en UTN FRBA.',
         'profile-title': 'Perfil Profesional',
-        'profile-text': 'Director de Tecnología con más de 10 años de experiencia en tecnología e ingeniería. Lideró proyectos de transformación digital, infraestructura crítica, ciberseguridad y mejora operativa en LATAM. Actualmente dirige la estrategia de TI en Grupo Tesacom y forma futuros ingenieros como docente en UTN FRBA.',
+        'profile-text-1': 'Soy Matías Nahuel López, profesional de tecnología con formación íntegra en Ingeniería Electrónica (carrera completa, finales en curso) y líder tecnológico por convicción. Inicié mi camino instalando equipamiento médico de alta complejidad -incluido el reemplazo de un resonador abierto que obligó a reforzar la estructura de un edificio con geopolímero- y desde entonces convierto cada desafío técnico en valor de negocio.',
+        'profile-text-2': 'Actualmente dirijo la estrategia TI de un grupo regional de telecomunicaciones satelitales. Creo en la tecnología con human touch: decisiones basadas en datos, ejecutadas por personas motivadas y seguras.',
+        'profile-text-3': 'Logros destacados:',
+        'profile-text-4': 'Implementación regional de plataforma de gestión (Odoo): ERP, CRM, Email Marketing, Legajo Digital RR.HH. y HelpDesk integrados. El 100% de los procesos críticos ya opera allí en los 4 países de la región.',
+        'profile-text-5': 'Optimización de infraestructura TI: racionalización de hosting y virtualización, con una reducción aproximada del 25% en costos anuales.',
+        'profile-text-6': 'Resiliencia en ciberseguridad: contuvimos un ataque de ransomware LockBit Black sin pérdida de datos e implementamos backups inmutables, 2FA y modelo Zero Trust, alineados con las recomendaciones FBI/CISA.',
+        'profile-text-7': 'Cultura y liderazgo: desarrollo de un equipo TI multidisciplinario de alto desempeño con impacto regional; gestión por OKRs, mentoría continua y retención de talento en un entorno de crecimiento.',
         'gallery-title': 'Galería',
         'gallery-1-title': 'Presentación en Conferencia',
         'gallery-1-desc': 'Compartiendo conocimientos sobre transformación digital',
@@ -32,7 +38,7 @@ const translations = {
         'exp-7-title': 'Asesor independiente de SySO',
         'exp-8-title': 'Técnico Electrónico',
         'education-title': 'Formación Académica',
-        'education-text': 'Ingeniería Electrónica en curso – UTN FRBA. Carrera cursada en su totalidad, con finales pendientes para la obtención del título.',
+        'education-text': 'Ingeniería Electrónica en curso - UTN FRBA. Carrera cursada en su totalidad, con finales pendientes para la obtención del título.',
         'teaching-title': 'Docencia',
         'teaching-1-title': 'Auxiliar docente',
         'teaching-1-desc': 'Informática 1: Participación en el curso piloto de Programación en C con introducción a microcontroladores. Enfoque en lógica de programación, estructura de código y primeros conceptos de hardware embebido.',
@@ -48,7 +54,18 @@ const translations = {
         'experience-button': 'Ver Experiencia',
         'email-button': 'Email',
         'linkedin-button': 'LinkedIn',
-        'footer-rights': 'Todos los derechos reservados'
+        'footer-rights': 'Todos los derechos reservados',
+        'exp-1-detail': 'Responsable de la estrategia tecnológica, liderazgo de equipos multidisciplinarios y gestión de proyectos de transformación digital.',
+        'exp-2-detail': 'Gestión regional de infraestructura, soporte y ciberseguridad para operaciones en LATAM.',
+        'exp-3-detail': 'Liderazgo en desarrollo de aplicaciones empresariales y automatización de procesos.',
+        'exp-4-detail': 'Diseño, implementación y mantenimiento de redes críticas.',
+        'exp-5-detail': 'Desarrollo full stack de soluciones SaaS y aplicaciones a medida.',
+        'exp-6-detail': 'Soporte técnico y mantenimiento de equipos médicos.',
+        'exp-7-detail': 'Consultoría independiente en seguridad y salud ocupacional.',
+        'exp-8-detail': 'Instalación y reparación de sistemas electrónicos industriales.',
+        'teaching-1-detail': 'Participación en el curso piloto de Programación en C con introducción a microcontroladores. Enfoque en lógica de programación, estructura de código y primeros conceptos de hardware embebido.',
+        'teaching-2-detail': 'Lenguaje C/C++, programación con Qt, trabajo con microcontroladores (UART, SPI, I2C), desarrollo de proyectos integradores en software y hardware.',
+        'education-detail': 'Carrera cursada en su totalidad, con finales pendientes para la obtención del título.'
     },
     en: {
         'nav-home': 'Home',
@@ -64,7 +81,13 @@ const translations = {
         'location': 'Argentina',
         'hero-description': 'IT Director with over 10 years of experience in technology and engineering. Led digital transformation, critical infrastructure, cybersecurity, and operational improvement projects across LATAM. Currently leads IT strategy at Grupo Tesacom and teaches future engineers at UTN FRBA.',
         'profile-title': 'Professional Profile',
-        'profile-text': 'IT Director with over 10 years of experience in technology and engineering. Led digital transformation, critical infrastructure, cybersecurity, and operational improvement projects across LATAM. Currently leads IT strategy at Grupo Tesacom and teaches future engineers at UTN FRBA.',
+        'profile-text-1': 'I am Matías Nahuel López, a technology professional with a complete Electronic Engineering curriculum (final exams in progress) and a tech leader by conviction. I began my career installing high-complexity medical equipment -including the replacement of an open MRI that required reinforcing a building\'s structure with geopolymer- and since then, I\ve turned every technical challenge into business value.',
+        'profile-text-2': 'I currently lead the IT strategy of a regional satellite-telecom group. I believe in technology with a human touch: data-driven decisions executed by empowered, motivated people.',
+        'profile-text-3': 'Key achievements:',
+        'profile-text-4': 'Regional management-platform roll-out (Odoo): integrated ERP, CRM, Email Marketing, Digital HR Records and Help Desk. 100% of critical processes now run on the platform across four countries.',
+        'profile-text-5': 'IT infrastructure optimization: streamlined hosting and virtualization, achieving an approximate 25% annual cost reduction.',
+        'profile-text-6': 'Cyber-resilience: contained a LockBit Black ransomware attack with zero data loss and deployed immutable backups, 2-factor authentication and a Zero Trust model in line with FBI/CISA guidance.',
+        'profile-text-7': 'Culture & leadership: built a high-performing, multidisciplinary IT team with regional impact; OKR-driven management, continuous mentoring and strong talent retention in a growth environment.',
         'gallery-title': 'Gallery',
         'gallery-1-title': 'Conference Presentation',
         'gallery-1-desc': 'Sharing knowledge about digital transformation',
@@ -98,7 +121,18 @@ const translations = {
         'experience-button': 'View Experience',
         'email-button': 'Email',
         'linkedin-button': 'LinkedIn',
-        'footer-rights': 'All rights reserved'
+        'footer-rights': 'All rights reserved',
+        'exp-1-detail': 'Responsible for technology strategy, leading multidisciplinary teams and managing digital transformation projects.',
+        'exp-2-detail': 'Regional management of infrastructure, support, and cybersecurity for LATAM operations.',
+        'exp-3-detail': 'Leadership in enterprise application development and process automation.',
+        'exp-4-detail': 'Design, implementation, and maintenance of critical networks.',
+        'exp-5-detail': 'Full stack development of SaaS solutions and custom applications.',
+        'exp-6-detail': 'Technical support and maintenance of medical equipment.',
+        'exp-7-detail': 'Independent consulting in occupational health and safety.',
+        'exp-8-detail': 'Installation and repair of industrial electronic systems.',
+        'teaching-1-detail': 'Participation in the pilot course of C Programming with microcontroller introduction. Focus on programming logic, code structure, and first embedded hardware concepts.',
+        'teaching-2-detail': 'C/C++ programming, Qt development, microcontroller work (UART, SPI, I2C), integrated software and hardware projects.',
+        'education-detail': 'Entire program completed; final exams pending for degree completion.'
     }
 };
 
@@ -114,16 +148,16 @@ const scrollProgress = document.getElementById('scrollProgress');
 // Función para cambiar el idioma
 function toggleLanguage() {
     currentLang = currentLang === 'es' ? 'en' : 'es';
-    langToggle.textContent = currentLang === 'es' ? 'EN' : 'ES';
-    
+    if (langToggle) langToggle.textContent = currentLang === 'es' ? 'EN' : 'ES';
     document.querySelectorAll('[data-lang]').forEach(element => {
         const key = element.getAttribute('data-lang');
-        if (translations[currentLang][key]) {
+        if (translations[currentLang][key] !== undefined) {
             element.textContent = translations[currentLang][key];
         }
     });
     updateCVDownload();
     updateExperienceDetails();
+    updateProfileSection();
 }
 
 // Función para manejar el menú móvil
@@ -321,8 +355,8 @@ function updateExperienceDetails() {
     ];
     detailKeys.forEach(item => {
         const detail = document.getElementById(item.id) || document.querySelector(`[data-lang='${item.key}']`);
-        if (detail && translations[currentLang][item.key]) {
-            detail.textContent = translations[currentLang][item.key];
+        if (detail) {
+            detail.textContent = translations[currentLang][item.key] || '';
         }
     });
 }
@@ -341,6 +375,7 @@ if (langSwitchToggle) {
         });
         updateCVDownload();
         updateExperienceDetails();
+        updateProfileSection();
     });
 }
 
@@ -388,6 +423,21 @@ if (galleryModalImg) {
     };
 }
 
+// Mostrar/ocultar bloques de perfil según idioma
+function updateProfileSection() {
+    const perfilEs = document.getElementById('perfil-es');
+    const perfilEn = document.getElementById('perfil-en');
+    if (perfilEs && perfilEn) {
+        if (currentLang === 'es') {
+            perfilEs.classList.remove('hidden');
+            perfilEn.classList.add('hidden');
+        } else {
+            perfilEs.classList.add('hidden');
+            perfilEn.classList.remove('hidden');
+        }
+    }
+}
+
 // Event Listeners
 document.addEventListener('DOMContentLoaded', () => {
     // Inicializar el idioma
@@ -423,4 +473,5 @@ document.addEventListener('DOMContentLoaded', () => {
     
     updateCVDownload();
     updateExperienceDetails();
+    updateProfileSection();
 }); 
