@@ -141,8 +141,9 @@
     <header class="fixed w-full top-0 z-50 bg-primary-dark/95 backdrop-blur-sm shadow-lg">
         <nav class="container mx-auto px-4 py-4">
             <div class="flex justify-between items-center">
+                
                 <div class="flex items-center space-x-4">
-                    <img src="favicon4.png" alt="Logo" class="w-8 h-8">
+                    <!-- <img src="favicon4.png" alt="Logo" class="w-8 h-8"> -->
                 </div>
                 
                 <!-- Menú hamburguesa para mobile -->
@@ -184,24 +185,30 @@
     </header>
 
     <main class="pt-20">
-        <section id="hero" class="bg-primary-dark text-white text-center py-20">
+        <section id="inicio" class="gradient-bg text-white py-32 -mt-20">
             <div class="container mx-auto px-4">
-                <div class="max-w-6xl mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-12">
-                    <div class="flex-1 flex justify-center md:justify-end mb-8 md:mb-0">
-                        <div class="w-64 h-64 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden border-4 border-highlight shadow-2xl animate-scale-in">
-                            <img src="assets/profile.jpg" alt="Matías Nahuel López" class="w-full h-full object-cover">
+                <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+                    <div class="flex-1 text-center md:text-left">
+                        <h1 data-lang="name" class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">Matías Nahuel López</h1>
+                        <h2 data-lang="role" class="text-2xl md:text-3xl text-accent-light mb-4 animate-slide-up">Director de Tecnología de la Información</h2>
+                        <p class="text-accent-soft text-xl mb-8 animate-slide-up" data-lang="location">Argentina</p>
+                        <p class="max-w-3xl text-gray-200 leading-relaxed text-lg animate-slide-up" data-lang="hero-description">
+                            Director de Tecnología con más de 10 años de experiencia en tecnología e ingeniería. 
+                            Lideró proyectos de transformación digital, infraestructura crítica, ciberseguridad y mejora operativa en LATAM. 
+                            Actualmente dirige la estrategia de TI en Grupo Tesacom y forma futuros ingenieros como docente en UTN FRBA.
+                        </p>
+                        <div class="mt-12 flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4">
+                            <a href="#contacto" class="bg-highlight text-white px-8 py-3 rounded-full hover:bg-primary transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <span data-lang="contact-button">Contactar</span>
+                            </a>
+                            <a href="#experiencia" class="border-2 border-white text-white px-8 py-3 rounded-full hover:bg-white hover:text-primary-dark transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                                <span data-lang="experience-button">Ver Experiencia</span>
+                            </a>
                         </div>
                     </div>
-                    <div class="flex-1 text-center md:text-left">
-                        <h1 class="text-4xl md:text-5xl font-bold">Matías Nahuel López</h1>
-                        <h2 class="mt-2 text-xl md:text-2xl font-medium">Director de Tecnología de la Información</h2>
-                        <p class="mt-4 text-lg md:text-xl font-light">Liderazgo tecnológico con <em>human&nbsp;touch</em> para transformar negocios</p>
-                        <p class="mt-2 max-w-2xl mx-auto text-base md:text-lg opacity-90">
-                            Profesional en tecnología e ingeniería con más de 10 años de trayectoria; hoy diseño y ejecuto la estrategia&nbsp;TI de un grupo regional de telecomunicaciones satelitales.
-                        </p>
-                        <div class="mt-8 space-x-4">
-                            <a href="#contacto" class="btn-primary">Contactar</a>
-                            <a href="#experiencia" class="btn-secondary">Ver experiencia</a>
+                    <div class="flex-1 relative">
+                        <div class="w-64 h-64 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden border-4 border-highlight shadow-2xl animate-scale-in">
+                            <img src="profile.png" alt="Matías Nahuel López" class="w-full h-full object-cover">
                         </div>
                     </div>
                 </div>
