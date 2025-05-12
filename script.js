@@ -197,10 +197,10 @@ function updateCVDownload() {
     const cvDownload = document.getElementById('cvDownload');
     if (!cvDownload) return;
     if (currentLang === 'es') {
-        cvDownload.href = 'cv-matias-nahuel-lopez-es.pdf';
+        cvDownload.href = 'CV_Matias_Nahuel_Lopez_ES.pdf';
         cvDownload.querySelector('span').textContent = 'Descargar CV';
     } else {
-        cvDownload.href = 'cv-matias-nahuel-lopez-en.pdf';
+        cvDownload.href = 'CV_Matias_Nahuel_Lopez_EN.pdf';
         cvDownload.querySelector('span').textContent = 'Download CV';
     }
 }
