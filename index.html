@@ -188,16 +188,19 @@
         <section id="inicio" class="gradient-bg text-white py-32 -mt-20">
             <div class="container mx-auto px-4">
                 <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+                    <!-- Bloque de texto -->
                     <div class="flex-1 text-center md:text-left">
-                        <h1 data-lang="name" class="text-5xl md:text-6xl font-bold mb-6 animate-fade-in">Matías Nahuel López</h1>
-                        <h2 data-lang="role" class="text-2xl md:text-3xl text-accent-light mb-4 animate-slide-up">Director de Tecnología de la Información</h2>
-                        <p class="text-accent-soft text-xl mb-8 animate-slide-up" data-lang="location">Argentina</p>
-                        <p class="max-w-3xl text-gray-200 leading-relaxed text-lg animate-slide-up" data-lang="hero-description">
-                            Director de Tecnología con más de 10 años de experiencia en tecnología e ingeniería. 
-                            Lideró proyectos de transformación digital, infraestructura crítica, ciberseguridad y mejora operativa en LATAM. 
-                            Actualmente dirige la estrategia de TI en Grupo Tesacom y forma futuros ingenieros como docente en UTN FRBA.
-                        </p>
-                        <div class="mt-12 flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4">
+                        <h1 data-lang="name" class="text-5xl md:text-6xl font-bold mb-6">Matías Nahuel López</h1>
+                        <h2 data-lang="role" class="text-2xl md:text-3xl text-accent-light mb-4">Director de Tecnología de la Información</h2>
+                        <p class="text-accent-soft text-xl mb-8" data-lang="location">Argentina</p>
+                        <!-- Foto solo en mobile -->
+                        <div class="block md:hidden mb-6">
+                            <div class="w-64 h-64 mx-auto rounded-full overflow-hidden border-4 border-highlight shadow-2xl">
+                                <img src="profile.png" alt="Matías Nahuel López" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                        <p class="max-w-3xl text-gray-200 leading-relaxed text-lg mb-8" data-lang="hero-description"></p>
+                        <div class="mt-8 flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4">
                             <a href="#contacto" class="bg-highlight text-white px-8 py-3 rounded-full hover:bg-primary transition-colors duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
                                 <span data-lang="contact-button">Contactar</span>
                             </a>
@@ -206,8 +209,9 @@
                             </a>
                         </div>
                     </div>
-                    <div class="flex-1 relative">
-                        <div class="w-64 h-64 md:w-80 md:h-80 mx-auto rounded-full overflow-hidden border-4 border-highlight shadow-2xl animate-scale-in">
+                    <!-- Foto solo en desktop -->
+                    <div class="hidden md:flex flex-1 justify-center md:justify-end">
+                        <div class="w-80 h-80 rounded-full overflow-hidden border-4 border-highlight shadow-2xl">
                             <img src="profile.png" alt="Matías Nahuel López" class="w-full h-full object-cover">
                         </div>
                     </div>
