@@ -185,8 +185,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     // Event listeners
-    langToggle.addEventListener('click', toggleLanguage);
+    if (langToggle) {
+        langToggle.addEventListener('click', toggleLanguage);
+      }
+    if (menuToggle) {
     menuToggle.addEventListener('click', toggleMobileMenu);
+    }
+      
     window.addEventListener('scroll', () => {
         updateScrollProgress();
         handleScrollAnimation();
@@ -199,10 +204,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Cerrar menú móvil al hacer click fuera
     document.addEventListener('click', (e) => {
-        if (!mobileMenu.contains(e.target) && !menuToggle.contains(e.target) && !mobileMenu.classList.contains('hidden')) {
-            toggleMobileMenu();
+        // Validamos existencia primero
+        if (!mobileMenu || !menuToggle) return;
+      
+        const clickedOutsideMenu = !mobileMenu.contains(e.target);
+        const clickedOutsideToggle = !menuToggle.contains(e.target);
+        const menuIsOpen = !mobileMenu.classList.contains('hidden');
+      
+        // Cerramos solo si el clic fue afuera de ambos, y el menú está abierto
+        if (clickedOutsideMenu && clickedOutsideToggle && menuIsOpen) {
+          toggleMobileMenu();
         }
-    });
+      });
     
     updateCVDownload();
     updateExperienceDetails();
