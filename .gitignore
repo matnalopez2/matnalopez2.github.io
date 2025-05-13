@@ -5,6 +5,7 @@ node_modules/
 dist/
 build/
 
+
 # Archivos temporales del sistema
 .DS_Store
 Thumbs.db
